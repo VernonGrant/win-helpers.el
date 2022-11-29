@@ -66,10 +66,8 @@ PROFILE: The terminal profile name (Optional)."
       (winh-shell-command-no-window (concat "wt -d ./"))
     (winh-shell-command-no-window (concat "wt -p \"" profile "\" -d ./"))))
 
-
 (defun winh-open-explorer-here()
   "Opens the Windows explorer from within WSL in the current directory."
-  ;; TODO: we need to the path issues, custom scripts maybe.
   (interactive)
   (winh-shell-command-no-window (concat "explorer .")))
 
