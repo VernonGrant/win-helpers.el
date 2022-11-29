@@ -32,15 +32,15 @@
 ;;;;;;;;;;;;;;;;;;;;
 
 (defgroup win-helpers nil
-    "Windows helpers settings."
-    :group 'convenience
-    :prefix "win-helpers-")
+  "Windows helpers settings."
+  :group 'convenience
+  :prefix "win-helpers-")
 
 ;;;;;;;;;;;;;;;
 ;; Utilities ;;
 ;;;;;;;;;;;;;;;
 
-(defun wh-shell-command-no-window (command)
+(defun winh-shell-command-no-window (command)
   "Run the provided command in the background.
 COMMAND: The shell command."
   (interactive)
@@ -53,19 +53,29 @@ COMMAND: The shell command."
     (async-shell-command
      command)))
 
+
+;;;;;;;;;;;;;
+;; Windows ;;
+;;;;;;;;;;;;;
+
+(defun winh-open-terminal-here(&optional profile)
+  "Opens the Windows terminal from within WSL in the current directory.
+PROFILE: The terminal profile name (Optional)."
+  (interactive)
+  (if (not profile)
+      (winh-shell-command-no-window (concat "wt -d ./"))
+    (winh-shell-command-no-window (concat "wt -p \"" profile "\" -d ./"))))
+
+
+(defun winh-open-explorer-here()
+  "Opens the Windows explorer from within WSL in the current directory."
+  ;; TODO: we need to the path issues, custom scripts maybe.
+  (interactive)
+  (winh-shell-command-no-window (concat "explorer .")))
+
 ;;;;;;;;;;;;;;;;;
 ;; WSL Helpers ;;
 ;;;;;;;;;;;;;;;;;
-
-;; Add Wayland clipboard fixes.
-
-(defun wh-wsl-open-windows-terminal(&optional profile)
-    "Opens the Windows terminal from within WSL in the current directory.
-PROFILE: The terminal profile name (Optional)."
-    (interactive)
-    (if (not profile)
-        (wh-shell-command-no-window "wt.exe -d .")
-        (wh-shell-command-no-window (concat "wt.exe -p \"" profile "\" -d ."))))
 
 (provide 'win-helpers)
 
